@@ -23,7 +23,8 @@ def entropy(l):
 
     probabilities = np.bincount(l) / len(l)
     with np.errstate(divide='ignore'):  # ignore log(0) errors, we'll handle
-        log_probabilities = np.nan_to_num(np.log2(probabilities))
+        log_probabilities = np.log2(probabilities)
+        log_probabilities[np.isnan(log_probabilities)] = 0
     return -np.sum(probabilities * log_probabilities)
 
 
@@ -66,4 +67,4 @@ def mutual_info_fast(l1, l2, l1_entropy, l2_entropy):
     vector again and again, you may do it once and supply it to this function
     in order to save on that computation.
     """
-    return l1_entropy + l2_entropy - entropy(joint_dataset(l1, l2))
+    return l1_entropy + l2_entropy - entropy(joint_dataset)
