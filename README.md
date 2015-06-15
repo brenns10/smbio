@@ -19,9 +19,8 @@ code.
 * `smbio.experiment` - Contains my configurable `Experiment` class, which allows
   you to execute many independent tasks in parallel without any explicit use of
   multiprocessing/threading constructs.
-* `smbio.util.repl` - Contains utilities to make life easier:
-    * `repl` - Call this to pop open a REPL anywhere in your code (uses the best
-      REPL available).
+* `smbio.util.repl` - Contains the all-powerful `repl()` function, which pops
+      open a REPL anywhere in your code (using the best REPL available).
 
 Dependencies
 ------------
