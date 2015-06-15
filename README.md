@@ -30,6 +30,11 @@ code.
       out how many iterations there will be.
     * Finally, the `pzip()` function, which is a replacement for the zip
       function, and can display progress bars with accurate estimates.
+* `smbio.util.menu` - Contains menu stuff:
+    * The wonderful `Menu` class, which allows you to build CLI menus with
+      decorators quickly and easily.
+    * A nifty `repeat_input()` function that asks for input with a validation
+      function (like `int()`) and continues asking until the input is valid.
 
 Dependencies
 ------------
