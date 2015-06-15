@@ -21,6 +21,15 @@ code.
   multiprocessing/threading constructs.
 * `smbio.util.repl` - Contains the all-powerful `repl()` function, which pops
       open a REPL anywhere in your code (using the best REPL available).
+* `smbio.util.progress` - Contains progress bar stuff:
+    * Particularly, the all-powerful `progress()` function, that takes a list or
+      an iterator and returns the same iterator, but while printing a progress
+      bar (if your terminal is capable of a progress bar).
+    * Additionally, the `@progress_bar()` annotation, which turns a generator
+      into a generator with a progress bar, and inspects the arguments to figure
+      out how many iterations there will be.
+    * Finally, the `pzip()` function, which is a replacement for the zip
+      function, and can display progress bars with accurate estimates.
 
 Dependencies
 ------------
