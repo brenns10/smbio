@@ -19,9 +19,9 @@ code.
 * `smbio.experiment` - Contains my configurable `Experiment` class, which allows
   you to execute many independent tasks in parallel without any explicit use of
   multiprocessing/threading constructs.
-* `smbio.util` - Contains utilities to make life easier:
-    * `debug_breakpoint` - Call this to pop open a REPL anywhere in your code
-      (uses the best REPL available).
+* `smbio.util.repl` - Contains utilities to make life easier:
+    * `repl` - Call this to pop open a REPL anywhere in your code (uses the best
+      REPL available).
 
 Dependencies
 ------------
@@ -30,5 +30,5 @@ So far, the only hard dependency is on NumPy, if you're using the math
 functions.
 
 If you'd like, IPython and/or PTPython will both improve the experience of
-`smbio.util.debug_breakpoint`, as well as provide you with better Python REPLs
-in general.
+`smbio.util.repl.repl()`, as well as provide you with better Python REPLs in
+general.

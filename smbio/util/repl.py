@@ -99,7 +99,7 @@ _embed_backends = [
 ]
 
 
-def debug_breakpoint():
+def repl():
     """
     Open up a terminal to inspect variables and do basic debugging tasks.
 
