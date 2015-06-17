@@ -67,4 +67,4 @@ def mutual_info_fast(l1, l2, l1_entropy, l2_entropy):
     vector again and again, you may do it once and supply it to this function
     in order to save on that computation.
     """
-    return l1_entropy + l2_entropy - entropy(joint_dataset)
+    return l1_entropy + l2_entropy - entropy(joint_dataset(l1, l2))
