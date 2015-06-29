@@ -1,11 +1,11 @@
 smbio
 =====
 
-Stupid name, but I wanted a place to put my most reusable bioinformatics code.
-My [tcga](https://github.com/brenns10/tcga) module is badly named (it really
-doesn't have very much to do with The Cancer Genome Atlas).  It contains code
-that I would like to use outside that one application.  So this module is my
-solution.
+This is a poorly named library containing generally useful code for
+bioinformatics.  Anything that's not too specific to the problem at hand can
+usually be placed into this library.  It contains implementations of math
+functions that aren't present in NumPy (like entropy and mutual information), as
+well as some time-saving utilities.  The full list of modules is below.
 
 Modules
 --------
@@ -39,9 +39,47 @@ code.
 Dependencies
 ------------
 
-So far, the only hard dependency is on NumPy, if you're using the math
-functions.
+* I only use Python 3.  I have tested none of this code on Python 2.  Your
+  mileage may vary.
+* So far, the only hard dependency is on NumPy, if you're using the math
+  functions.
+* If you'd like, IPython and/or PTPython will both improve the experience of
+  `smbio.util.repl.repl()`, as well as provide you with better Python REPLs in
+  general.
 
-If you'd like, IPython and/or PTPython will both improve the experience of
-`smbio.util.repl.repl()`, as well as provide you with better Python REPLs in
-general.
+Installation
+------------
+
+So far, I haven't felt the need to package this into a "true" Python library
+that you can install with Pip.  So, installation really just consists of cloning
+the code and adding the package to your Python path.
+
+For instance:
+
+```bash
+cd ~/repos
+git clone repository-url-here
+export PYTHONPATH=$PYTHONPATH:$HOME/repos/smbio/smbio
+```
+
+This would only add the library to your path for the duration of that shell
+session.  To make this permanent, you'll want to place a line in your
+`~.profile` folder like this:
+
+```
+export PYTHONPATH=$PYTHONPATH:/full/path/to/smbio
+```
+
+Contribution
+------------
+
+If this package proves useful to you, and you have any more code you think
+belongs here, please feel free to fork and create a pull request.  Hopefully
+this can be a package that's useful to a lot of people who use Python for
+bioinformatics, especially in my research group.
+
+License
+-------
+
+This code is under the MIT License.  You can find more information in
+`LICENSE.txt`.
