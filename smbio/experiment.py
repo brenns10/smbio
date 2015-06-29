@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod
 from collections import OrderedDict
 
 
-class Experiment:
+class Experiment(object):
     """
     Abstract Base Class for experiment execution.
 
