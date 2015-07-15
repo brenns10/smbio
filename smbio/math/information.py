@@ -68,3 +68,21 @@ def mutual_info_fast(l1, l2, l1_entropy, l2_entropy):
     in order to save on that computation.
     """
     return l1_entropy + l2_entropy - entropy(joint_dataset(l1, l2))
+
+
+def synergy(g1, g2, c):
+    """
+    Compute the bivariate synergy between two factors WRT a phenotype.
+
+    This is defined as:
+        :math:`Syn(G_1, G_2, C) = I(G_1, G_2; C) - [I(G_1, C) + I(G_2, C)]
+    in Dimitris Anastassiou's 2007 paper, "Computational Analysis of the
+    Synergy Among Multiple Interacting Genes".
+
+    :param g1: The first factor.
+    :param g2: The second factor.
+    :param c: The phenotype
+    :return: Bivariate synergy.
+    """
+    return mutual_info(joint_dataset(g1, g2), c) -\
+        mutual_info(g1, c) - mutual_info(g2, c)
