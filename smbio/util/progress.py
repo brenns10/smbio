@@ -17,7 +17,8 @@ class TermType(Enum):
 def _non_ipy_term_type():
     """
     The terminal type of a non-IPython terminal.
-    :return: Item of type TermType.
+
+    :return: Item of type :class:`TermType`.
     """
     import sys
     if sys.stdout.isatty():
@@ -29,7 +30,8 @@ def _non_ipy_term_type():
 def get_term_type():
     """
     Identifies the type of terminal the current Python instance is running in.
-    :return: Item of type TermType.
+
+    :return: Item of type :class:`TermType`.
     """
     try:
         # noinspection PyUnresolvedReferences
@@ -53,8 +55,9 @@ def get_term_type():
 def _silent_format(string, params):
     """
     Attempt to format a string, and ignore any exceptions that occur.
-    :param string: String to format.
-    :param params: Formatting parameters.
+
+    :param str string: String to format.
+    :param tuple params: Formatting parameters.
     :return: The formatted string, or the string parameter on error.
     """
     try:
@@ -76,14 +79,16 @@ class Progress:
 
     def __init__(self, it, width=80, niters=100):
         """
-        Create a progress bar from an iterator.
+        *Constructor*
+
         This function can infer iterations from any object on which len() can
         be applied.  If len() cannot be applied, then niters is used to
         determine the number of iterations to base the estimate.
-        :param it: The iterator to wrap.
-        :param width: The console width.
-        :param niters: Estimated number of iterations.
-        :return:
+
+        :param iterable it: The iterator to wrap.
+        :param int width: The console width.
+        :param int niters: Estimated number of iterations.
+        :return: None
         """
         self.it = iter(it)
         self.width = width
@@ -115,6 +120,7 @@ class Progress:
     def __iter__(self):
         """
         Called to create an iterator from this object.
+
         :return: Self.
         """
         return self
@@ -122,6 +128,7 @@ class Progress:
     def __flush(self):
         """
         Flush the stdout buffer, if it contains anything.
+
         :return: Nothing
         """
         output = sys.stdout.getvalue()
@@ -135,6 +142,7 @@ class Progress:
     def __progress(self):
         """
         Print the progress bar if it is necessary.
+
         :return: Nothing.
         """
         newpercent = int((self.iters / self.estimate) * 100)
@@ -153,6 +161,7 @@ class Progress:
     def __next__(self):
         """
         Called on each iteration, to get a value.
+
         :return: The next value from self.it.
         """
         self.iters += 1
@@ -180,11 +189,15 @@ class Progress:
 def progress(it, *args, **kwargs):
     """
     Returns a progress bar if terminal is capable.
+
     See docstrings for Progress for more information on the other arguments.
+
     :param it: The iterator/list/range.
-    :param args: Other positional arguments.
-    :param kwargs: Other keyword arguments.
-    :return:
+    :param args: Other positional arguments to pass to constructor of
+                 :class:`Progress`.
+    :param kwargs: Other keyword arguments for :class:`Progress`.
+    :return: instance of :class:`Progress` if terminal is capable, otherwise
+             returns the original iterator.
     """
     termtype = get_term_type()
     if termtype == TermType.TTY or termtype == TermType.IPythonTerminal:
@@ -196,19 +209,23 @@ def progress(it, *args, **kwargs):
 def progress_bar(index=None, name='niters', niters=100):
     """
     Turns a generator function into an iterator that uses Progress.
+
     Use this function as a decorator on a generator function.  Note that to use
     this function as a decorator, you must always call the function after the @
-    sign.  That is, if you don't provide size_param, use
-    :code:`@progress_bar()`, instead of :code:`@progress_bar`.
-    :param size_param: This parameter tells the progress bar where it can
-    find an estimate of the number of iterations in the parameter list of the
-    call to the generator function.  The elements of the tuple are:
-    - [0]: Argument index (default None)
-    - [1]: Keyword argument index
-    - [2]: Default (a better guess than util.Progress can provide).
-    The default is to look for an niters parameter in the call to the wrapped
-    generator.
-    :return:
+    sign.  That is, if you don't provide size_param, use ``@progress_bar()``,
+    instead of ``@progress_bar``.
+
+    :param tuple size_param: This parameter tells the progress bar where it can
+        find an estimate of the number of iterations in the parameter list of
+        the call to the generator function.  The elements of the tuple are:
+
+        - [0]: Argument index (default None)
+        - [1]: Keyword argument index
+        - [2]: Default (a better guess than util.Progress can provide).
+
+        The default is to look for an niters parameter in the call to the
+        wrapped generator.
+    :return: Wrapped generator function.
     """
     def wrap(f):
         """
@@ -217,6 +234,7 @@ def progress_bar(index=None, name='niters', niters=100):
         executes on module load.  It returns this function, which is the one
         that is actually called with the function to be decorated as a
         parameter.  This function returns a wrapped version of f.
+
         :param f: The actual function to be decorated.
         :return: The decorated/wrapped function.
         """
