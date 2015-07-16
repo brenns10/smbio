@@ -13,6 +13,13 @@ def repeat_input(prompt='? ', in_type=str, num_retries=-1):
     parameter is omitted, it will be supplied as -1.  If the user enters a
     blank string, this is considered a cancel sequence, and None is returned.
     Similarly, if the number of retries is exceeded, None is returned.
+
+    :param str prompt: prompt to display each time input is requested
+    :param type in_type: type or function to use to cast the input.  Should
+                         raise :class:`ValueError` if input is invalid.
+    :param num_retries: number of times to retry before returning.  -1 for
+                        infinite.
+    :returns: Input casted to ``in_type``
     """
     rv_str = input(str(prompt))  # Ask for input the first time
     rv = None
@@ -48,11 +55,13 @@ class Menu:
 
     def __init__(self, title='Main Menu', options=(), reentrant=False,
                  exit_text='Enter a blank string to exit.'):
-        """Create an instance of the Menu class.
-        title: (required) The title to be displayed
-        options: A list of (string, action) tuples.
-        reentrant: Return to the menu after executing an action?
-        exit_text: The text to display for the exit option.
+        """
+        *Constructor*
+
+        :param title: The title to be displayed
+        :param options: A list of (string, action) tuples.
+        :param reentrant: Return to the menu after executing an action?
+        :param exit_text: The text to display for the exit option.
         """
         self.title = str(title)
         self.options = list(options)
@@ -103,7 +112,8 @@ class Menu:
     def add(self, name, action):
         """
         Add an item to the menu.
-        :param name: Text to display for menu item.
+
+        :param str name: Text to display for menu item.
         :param action: Action to perform (function or menu).
         """
         self.options.append((name, action))
@@ -111,8 +121,10 @@ class Menu:
     def function(self, name):
         """
         Function decorator to add directly to a menu.
-        Put @menu.add_function('<text>') above a function to insert it right
+
+        Put ``@menu.add_function('<text>')`` above a function to insert it right
         into the menu.
+
         :param name: The text to appear for the menu item.
         :return: A decorator that takes a function and adds it to the menu.
         """
