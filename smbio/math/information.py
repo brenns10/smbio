@@ -5,7 +5,7 @@ import numpy as np
 
 def entropy(l):
     """
-    Return the entropy of any discrete vector.
+    Return the entropy of any vector of discrete values.
 
     Shannon Entropy is a measure of the "information content" of a random
     variable.  The more widely dispersed the possible values of the RV, the
@@ -15,9 +15,10 @@ def entropy(l):
     equal probability would have entropy of 1 bit, etc.  The entropy function
     is denoted by H(X), and the definition is as follows:
 
-        :math:`H(X) = - \sum_{x\inX} p(X=x) \log_2(p(X=x))`
+        :math:`H(X) = - \sum_{x\in X} p(X=x) \log_2(p(X=x))`
 
-    :param l: Array (compatible with NumPy array) of integers/bools.
+    :param l: Array of integers/bools.
+    :type l: numpy.array or similar
     :returns: The entropy of the array.
     """
 
@@ -37,6 +38,12 @@ def joint_dataset(l1, l2):
     representing a possible combination of values from l1 and l2.  Essentially,
     this is equivalent to zipping l1 and l2, but much faster by using the NumPy
     native implementations of elementwise addition and multiplication.
+
+    :param l1: first integer vector (values within 0-n)
+    :type l1: numpy.array or similar
+    :param l2: second integer vector (values with 0-m)
+    :type l2: numpy.array or similar
+    :returns: integer vector expressing states of both l1 and l2
     """
     N = np.max(l1) + 1
     return l2 * N + l1
@@ -53,7 +60,15 @@ def mutual_info(l1, l2):
     and only if they are independent.  (Note that this really applies to random
     variables.  Measurements of random variables obviously won't always
     evaluate to completely independent probabilities, and so they won't always
-    have exactly 0 mutual information).
+    have exactly 0 mutual information).  The mathematical definition is:
+
+        :math:`I(X; Y) = H(X) + H(Y) - H(X,Y)`
+
+    :param l1: first integer vector (X)
+    :type l1: numpy.array or similar
+    :param l2: first integer vector (Y)
+    :type l2: numpy.array or similar
+    :retuns: mutual information, as a float
     """
     return entropy(l1) + entropy(l2) - entropy(joint_dataset(l1, l2))
 
@@ -66,18 +81,25 @@ def mutual_info_fast(l1, l2, l1_entropy, l2_entropy):
     information values.  Instead of blindly recomputing the entropy of each
     vector again and again, you may do it once and supply it to this function
     in order to save on that computation.
+
+    :param l1: first integer vector (X)
+    :type l1: numpy.array or similar
+    :param l2: first integer vector (Y)
+    :type l2: numpy.array or similar
+    :param float l1_entropy: entropy of ``l1`` (precomputed)
+    :param float l2_entropy: entropy of ``l2`` (precomputed)
+    :retuns: mutual information, as a float
     """
     return l1_entropy + l2_entropy - entropy(joint_dataset(l1, l2))
 
 
 def synergy(g1, g2, c):
     """
-    Compute the bivariate synergy between two factors WRT a phenotype.
+    Compute the bivariate synergy between two factors WRT a phenotype.  This is
+    defined as follows in [Anastassiou-2007]_:
 
-    This is defined as:
-        :math:`Syn(G_1, G_2, C) = I(G_1, G_2; C) - [I(G_1, C) + I(G_2, C)]
-    in Dimitris Anastassiou's 2007 paper, "Computational Analysis of the
-    Synergy Among Multiple Interacting Genes".
+        :math:`Syn(G_1, G_2, C) = I(G_1, G_2; C) - [I(G_1, C) + I(G_2, C)]`
+
 
     :param g1: The first factor.
     :param g2: The second factor.
