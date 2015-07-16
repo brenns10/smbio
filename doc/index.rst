@@ -11,11 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   smbio.math.information
-   smbio.experiment
-   smbio.util.repl
-   smbio.util.progress
-   smbio.util.menu
+   about
+   api
+   references
 
 
 Indices and tables
@@ -24,4 +22,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
