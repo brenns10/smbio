@@ -24,31 +24,27 @@ class Experiment(object):
     processes when they're forked.  You need to be a bit clever with your
     storage of large datasets if that's going to be an issue.
 
-    In order to use this class, you must override the `task()` method and the
-    :func:`result()` method.  You will also need to provide a constructor
-    (which calls the base class constructor first).  Then, all you need to do
-    is call :func:`run()`.  Set ``mp=False`` if you want the experiment done
-    in serial (although I'm not sure why you would).
+    In order to use this class, subclass it. You must override:
+
+       - :func:`task()` with a custom experiment task.
+       - :func:`result()` with code to store results.
+       - You'll probably want to override the constructor, but you are required
+         to call this class's constructor in the first line of your
+         constructor.
+
+    Then, all you need to do is call :func:`run()`.  Set ``mp=False`` if you
+    want the experiment done in serial (although I'm not sure why you would).
     """
     __metaclass__ = ABCMeta
 
     def __init__(self, silent=False):
         """
-        Constructor for Experiment ABC.  You'll need to override this.
+        **Constructor**
 
-        Your first call in your overridden constructor should be
-        ``super().__init__(...)``.  Then, you'll want to set the parameters of
-        your experiment.  To do this, add their names as keys in self._params,
-        and an iterable of possible values as the dictionary value.  EG:
+        You *must* call the constructor if you override it.
 
-            self._params['Trial'] = range(100)  # Do 100 trials
-
-        In your task() function, you will get a list of parameter values,
-        ordered by when they were added to the dictionary.
-
-        :param silent: Set this to True if you don't want a line of output for
-        every completed task.
-        :type silent: bool
+        :param bool silent: Set this to True if you don't want a line of output
+          for every completed task.
         :return: None
         """
         self._silent = silent
@@ -69,9 +65,8 @@ class Experiment(object):
         When the experiment is run multiprocessing, it is run in a separate
         process!
 
-        :param configuration: A list of parameter values.  The order is the
-        order they were added to the
-        :type configuration: tuple
+        :param tuple configuration: A list of parameter values.  The order is
+          the order they were added to ``self._params``.
         :return: Any results which need to be saved.
         """
         pass
